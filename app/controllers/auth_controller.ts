@@ -1,19 +1,24 @@
 import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
+import { registerValidator } from '#validators/register'
 
 export default class AuthController {
   // Enregistrement
   async register({ request, response, auth }: HttpContext & { auth: any }) {
-    const { fullName, email, password } = request.only(['fullName', 'email', 'password'])
+     const payload = await request.validate({ schema: registerValidator })
+
+      const { fullName, email, password } = payload
 
     const existingUser = await User.findBy('email', email)
     if (existingUser) {
       return response.conflict({ message: 'Cet email est déjà utilisé.' })
     }
 
-   const user = await User.create({ fullName, email, password })
+  //  const user = await User.create({ fullName, email, password })
    //const token = await auth.use('api').generate(user)
+   const u= new User()
+   const user = await u.fill({ fullName, email, password }).save() //mieux vaut utiliser cette fonction fill pour creer un user
 
       return response.created({
         message: 'Utilisateur créé avec succès ✅',
@@ -25,6 +30,7 @@ export default class AuthController {
   // Connexion
   async login({ request, response, auth }: HttpContext & { auth: any }) {
     const { email, password } = request.only(['email', 'password'])
+
 
     const user = await User.findBy('email', email)
     if (!user) {
