@@ -13,12 +13,12 @@ export default class AuthController {
     }
 
    const user = await User.create({ fullName, email, password })
-   const token = await auth.use('api').generate(user)
+   //const token = await auth.use('api').generate(user)
 
       return response.created({
         message: 'Utilisateur créé avec succès ✅',
         user,
-        token: token.token,
+       // token: token.token,
       })
   }
 
@@ -36,13 +36,13 @@ export default class AuthController {
       return response.unauthorized({ message: 'Mot de passe incorrect' })
     }
 
-   const token = await auth.use('api').generate(user)
+   //const token = await auth.use('api').generate(user)
 
 
     return response.ok({
       message: 'Connexion réussie 👌',
       user,
-      token: token.token,
+      //token: token.token,
     })
   }
 
