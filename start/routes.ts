@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import AuthController from '#controllers/auth_controller'
+import PodcastsController from '#controllers/podcasts_controller'
 
 router.get('/', async () => {
   return {
@@ -19,6 +20,7 @@ router.get('/', async () => {
 
 router.post('/register', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
+router.get('/podcasts/search', [PodcastsController, 'search'])
 
 // routes protégées
 // router.get('/me', [AuthController, 'me']).middleware(['auth'])
