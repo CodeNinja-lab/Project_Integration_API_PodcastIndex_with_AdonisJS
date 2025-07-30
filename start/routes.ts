@@ -20,7 +20,9 @@ router.get('/', async () => {
 
 router.post('/register', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
-router.get('/podcasts/search', [PodcastsController, 'search'])
+// router.get('/podcasts/search', [PodcastsController, 'search'])
+
+router.post('/podcasts/search', [PodcastsController, 'search'])
 
 // routes protégées
 // router.get('/me', [AuthController, 'me']).middleware(['auth'])
