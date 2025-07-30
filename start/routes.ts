@@ -24,6 +24,8 @@ router.post('/login', [AuthController, 'login'])
 
 router.post('/podcasts/search', [PodcastsController, 'search'])
 
+
+
 // routes protégées
 // router.get('/me', [AuthController, 'me']).middleware(['auth'])
 // router.post('/logout', [AuthController, 'logout']).middleware(['auth'])
