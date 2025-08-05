@@ -2,6 +2,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 import { registerValidator } from '#validators/register'
+import emitter from '@adonisjs/core/services/emitter' 
 
 export default class AuthController {
   // Enregistrement
@@ -19,12 +20,12 @@ export default class AuthController {
    //const token = await auth.use('api').generate(user)
    const u= new User()
    const user = await u.fill({ fullName, email, password }).save() //mieux vaut utiliser cette fonction fill pour creer un user
-
+    emitter.emit('user:registered',user)
       return response.created({
         message: 'Utilisateur créé avec succès ✅',
         user,
        // token: token.token,
-      })
+      }) 
   }
 
   // Connexion
