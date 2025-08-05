@@ -15,8 +15,7 @@ export default class AuthController {
     if (existingUser) {
       return response.conflict({ message: 'Cet email est déjà utilisé.' })
     }
-
-  //  const user = await User.create({ fullName, email, password })
+  // const user = await User.create({ fullName, email, password })
    //const token = await auth.use('api').generate(user)
    const u= new User()
    const user = await u.fill({ fullName, email, password }).save() //mieux vaut utiliser cette fonction fill pour creer un user
