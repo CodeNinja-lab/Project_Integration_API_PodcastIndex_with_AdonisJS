@@ -6,16 +6,20 @@ export default class Podcast extends BaseModel {
   declare id: number
 
   @column()
+  declare id_post: number
+
+  @column()
   declare title_podcast:string
 
   @column()
-  declare descritpion_podcast: string
+  declare description_podcast: string
 
   @column()
   declare url_podcast: string
   
   @column()
   declare time_podcast: number
+
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

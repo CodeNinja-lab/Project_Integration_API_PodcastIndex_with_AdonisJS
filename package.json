@@ -61,6 +61,7 @@
     "@vinejs/vine": "^3.0.1",
     "axios": "^1.11.0",
     "crypto-js": "^4.2.0",
+    "fast-xml-parser": "^5.2.5",
     "luxon": "^3.7.1",
     "mysql2": "^3.14.2",
     "node-fetch": "^3.3.2",

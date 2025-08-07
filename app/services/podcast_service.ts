@@ -17,14 +17,14 @@ export default class PodcastService {
 
   public static async searchByText(term: string) {
     const encodedTerm = encodeURIComponent(term)
-    const url = `https://api.podcastindex.org/api/1.0/search/bytitle?q=${encodedTerm}`
+    const url = `${process.env.URLAPI}/search/bytitle?q=${encodedTerm}`
 
       const data = await HttpClientService.get(url)
       return data 
   }
 
   public static async searchById(id: number) {
-    const url = `https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id=${id}`
+    const url = `${process.env.URLAPI}/podcasts/byfeedid?id=${id}`
 
  
       const data = await HttpClientService.get(url)

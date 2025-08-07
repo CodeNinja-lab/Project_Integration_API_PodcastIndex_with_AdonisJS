@@ -1,24 +1,27 @@
 // app/Services/PostService.ts
 import Post from '#models/post'
 import HttpClientService from './http_client_service.js'
+import SavePodcastService from './save_podcast_service.js'
 
 export default class PostService {
   public static async savePost(term: string) {
     if (!term) {
       throw new Error('Le mot-clé (term) est requis')
     }
-
-    if (/^\d+$/.test(term)) {
-      return this.searchById(parseInt(term))
-    }
-
-    return this.searchByText(term)
+     await this.searchByText(term)
+    return SavePodcastService.searchByText(term)
   }
   public static async searchByText(term: string) {
     const encodedTerm = encodeURIComponent(term)
-    const url = `https://api.podcastindex.org/api/1.0/search/bytitle?q=${encodedTerm}`
+    const url = `${process.env.URLAPI}/search/bytitle?q=${encodedTerm}`
       const data = await HttpClientService.get(url)
        let inserted = 0
+        if(data.feeds.length == 0){
+              return ({
+                msg:'Pas de podcast pour ce title'
+              })
+
+        }
       for (const item of data.feeds || []) {
         const post = await Post.firstOrCreate({
           idfeed: item.id,
@@ -30,15 +33,10 @@ export default class PostService {
           inserted++
         }
       }
+       
       return {
-        'Nombres de lignes inserees dans la table posts':inserted,
-        data
+        'Nombres de lignes retournees dans la table posts':inserted
       }
   }
-  public static async searchById(id: number) {
-    const url = `https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id=${id}`
-      const data = await HttpClientService.get(url)
-      return data
-
-  }
+ 
 }
